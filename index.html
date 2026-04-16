@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>DG MODZ STORE | Ultimate Mod Hub</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+     <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="top-bar">
+    <div class="logo-area">
+        <img src="https://files.catbox.moe/q7bhx1.jpg" alt="Logo">
+        <h2>DG MODZ STORE</h2>
+    </div>
+    
+    <div class="controls">
+        <button id="darkmodeToggle" class="icon-btn"><i class="fas fa-moon"></i></button>
+        <button id="musicToggle" class="icon-btn"><i class="fas fa-music"></i> <span id="musicStatus" style="font-size: 0.7rem;">OFF</span></button>
+        <button class="menu-toggle" id="menuToggleBtn"><i class="fas fa-bars"></i></button>
+    </div>
+
+    <div class="nav-menu" id="mainNav">
+        <button class="nav-btn" id="menuLoginBtn" style="display:none;"><i class="fas fa-key"></i> LOGIN</button>
+        <button class="nav-btn" data-page="store">📦 STORE</button>
+        <button class="nav-btn" data-page="comments">💬 COMMENT</button>
+        <button class="nav-btn" data-page="creator">👾 CREATOR</button>
+        <button class="nav-btn" data-page="account">👤 ACCOUNT</button>
+    </div>
+</div>
+
+<div class="page-container">
+    <div id="storePage" class="page active-page">
+        <input type="text" id="search" placeholder="🔍 Search mods... (WhatsApp, TikTok, etc)">
+        <div id="appList" class="app-grid"></div>
+    </div>
+
+    <div id="commentsPage" class="page">
+        <div class="comment-slideshow">
+            <img class="slides" src="https://www.image2url.com/r2/default/images/1776019187583-ab10f77e-a23e-4194-987b-ca8cabc20ab8.png">
+            <img class="slides" src="https://www.image2url.com/r2/default/images/1776019047202-1e513dd3-2f8b-44eb-8f45-9527d5db22a3.png">
+            <img class="slides" src="https://i.ibb.co/h18J593W/c153b2a8bc0442a5dde016c38c988122.jpg">
+        </div>
+
+        <div id="commentsLoginGate"></div>
+        <div id="commentSectionWrapper" style="display: none;">
+            <div class="comment-form-area">
+                <textarea id="newCommentInput" rows="2" style="width:100%; background:var(--input-bg); border:1px solid var(--border-color); border-radius:15px; padding:10px; color:white; font-weight: 600;" placeholder="Express your thoughts..."></textarea>
+                <button id="submitCommentBtn" style="background:var(--accent); border:none; padding:10px 20px; border-radius:40px; color:white; margin-top:10px; cursor:pointer; font-weight: 800;">Post Comment</button>
+            </div>
+            <div id="commentsListContainer"></div>
+        </div>
+    </div>
+
+    <div id="creatorPage" class="page">
+        <div class="info-card" style="text-align: center;">
+            <div class="creator-video-container" onclick="toggleVideoSound(this)">
+                <video id="creatorVid" src="https://files.catbox.moe/dazxqu.mp4" autoplay loop playsinline></video>
+                <p style="font-size: 0.6rem; color: var(--accent);">Click for sound 🔊</p>
+            </div>
+            <h2 style="letter-spacing: 1px; color: var(--accent);"></h2></h2>🌍 DG PROGRAMMER 🌍</h2>
+            <br>
+            <p style="color: var(--text-secondary); line-height: 1.6; font-size: 1.05rem;">Passionate modder & developer. Providing premium unlocked APKs safely.</p>
+            <br>
+            <p style="opacity: 0.9;">The purpose of my website is to provide you with free, ads-free, and safe working mods. If you have any problems, you can leave a comment and share your thoughts. Share the website with your friends.</p>
+             <br>
+            <h3 style="color: var(--accent); font-size: 1.4rem;">Owner : Dasun Gimhana</h3>
+
+            <div class="social-buttons">
+                <a href="https://wa.me/+94783188906?text=_𝙝𝙮" class="social-btn wa" target="_blank">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </a>
+                <a href="https://t.me/DasunTECH" class="social-btn tg" target="_blank">
+                    <i class="fab fa-telegram-plane"></i> Telegram
+                </a>
+                <a href="https://chat.whatsapp.com/If2IrHuqGzTDyMD9HuTMRt?mode=gi_t" class="social-btn gp" target="_blank">
+                    <i class="fas fa-users"></i> WhatsApp Group
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="accountPage" class="page">
+        <div id="accountContent"></div>
+    </div>
+
+    <div id="authPage" class="page">
+        <div class="auth-container">
+            <div class="auth-tab">
+                <button id="authLoginTab" class="active-tab">🔐 LOGIN</button>
+                <button id="authSignupTab">✨ SIGN UP</button>
+            </div>
+            <div id="loginForm">
+                <input type="email" id="loginEmail" class="auth-input" placeholder="Email Address" autocomplete="email">
+                <input type="password" id="loginPassword" class="auth-input" placeholder="Password (min 8 chars, letters+numbers)">
+                <div id="loginError" class="error-msg"></div>
+                <button id="doLoginBtn" class="auth-btn">LOGIN <i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div id="signupForm" style="display:none;">
+                <input type="text" id="signupUsername" class="auth-input" placeholder="Username">
+                <input type="email" id="signupEmail" class="auth-input" placeholder="Email">
+                <input type="password" id="signupPassword" class="auth-input" placeholder="Password (Letters + Numbers, min 8)">
+                <input type="password" id="signupConfirm" class="auth-input" placeholder="Confirm Password">
+                <div id="signupError" class="error-msg"></div>
+                <button id="doSignupBtn" class="auth-btn">CREATE ACCOUNT 🚀</button>
+            </div>
+            <div class="back-store">
+                <a href="#" onclick="switchPage('store'); return false;"><i class="fas fa-store"></i> Back to Store</a>
+            </div>
+        </div>
+    </div>
+    
+    <footer>© 2025 DG MODZ STORE — elevate your mod experience</footer>
+</div>
+    <script src="script.js" ></script>
+</body>
+</html>
