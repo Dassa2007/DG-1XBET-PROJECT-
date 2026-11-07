@@ -82,19 +82,17 @@
         <input type="file" id="fileInput">
     </div>
     
-    <button onclick="uploadFile()">ලින්ක් එක ජෙනරේට් කරන්න</button>
+    <button type="button" onclick="uploadFile()">ලින්ක් එක ජෙනරේට් කරන්න</button>
     
     <div class="result" id="resultArea"></div>
 </div>
 
 <script>
-    // Server 1 විස්තර (පළමු එකවුන්ට් එක)
     const server1 = {
-        cloudName: "wwb8ifud",[span_2](start_span)[span_2](end_span)
-        uploadPreset: "dg_dev[span_3](start_span)"[span_3](end_span)
+        cloudName: "wwb8ifud",[span_0](start_span)[span_0](end_span)
+        uploadPreset: "dg_dev[span_1](start_span)"[span_1](end_span)
     };
 
-    // Server 2 විස්තර (අලුත් එකවුන්ට් එක)
     const server2 = {
         cloudName: "rakvvolf",
         uploadPreset: "dg_dev1"
@@ -110,10 +108,9 @@
             return;
         }
 
-        // තෝරාගත් සර්වර් එකට අනුව අදාළ විස්තර තෝරා ගැනීම
         const currentServer = (serverSelect === 'server1') ? server1 : server2;
-
         const file = fileInput.files[0];
+        
         const formData = new FormData();
         formData.append('file', file);
         formData.append('upload_preset', currentServer.uploadPreset); 
@@ -127,15 +124,16 @@
             });
 
             const data = await response.json();
+            
             if (data.secure_url) {
                 const longUrl = data.secure_url;
-                
                 let shortUrl = longUrl;
+                
                 try {
                     const shortResponse = await fetch(`https://is.gd/create.php?format=simple&url=${encodeURIComponent(longUrl)}`);
                     if (shortResponse.ok) {
                         const text = await shortResponse.text();
-                        if (text.startsWith('http')) {
+                        if (text && text.startsWith('http')) {
                             shortUrl = text.trim();
                         }
                     }
@@ -149,7 +147,7 @@
             }
         } catch (error) {
             console.error('Error:', error);
-            resultArea.innerHTML = 'දෝෂයක් සිදු විය.';
+            resultArea.innerHTML = 'දෝෂයක් සිදු විය. අන්තර්ජාල සම්බන්ධතාවය පරීක්ෂා කරන්න.';
         }
     }
 </script>
