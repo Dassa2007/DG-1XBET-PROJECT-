@@ -1,80 +1,158 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="si">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DG SIGNAL - Ultra Predictor PRO v2.6</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <title>Multi-Server Cloudinary URL Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+        }
+        select, input[type="file"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            word-break: break-all;
+        }
+        .result a {
+            color: #0066cc;
+        }
+    </style>
 </head>
 <body>
 
-    <audio id="beep-sound" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3"></audio>
-
-    <nav id="navbar" class="hidden">
-        <div class="logo">DG SIGNAL</div>
-        <div>
-            <span class="stats">● Live: <span id="user-count">124</span></span>
-            <button style="background:none; border:none; color:white; font-size:1.2rem; cursor:pointer;" onclick="showPage('contact')">☰</button>
-        </div>
-    </nav>
-
-    <div id="ticker" class="news-ticker hidden">
-        <div class="ticker-text">
-            ⚠️ අවධානයට: අද දින 1xbet පද්ධතියේ නඩත්තු කටයුත්තක් පවතින බැවින් 4.0x ට වඩා වැඩි බෙට් ඇල්ලීමෙන් වළකින්න. | දිනපතා නොමිලේ සිග්නල් ලබා ගැනීමට මෙම සමූහය හා සම්බන්ධ වන්න. 100% Free🇱🇰
-        </div>
+<div class="container">
+    <h2>Multi-Server URL Generator</h2>
+    
+    <div class="form-group">
+        <label for="serverSelect">සර්වර් එක තෝරන්න (Select Server):</label>
+        <select id="serverSelect">
+            <option value="server1">Server 1 (Account 1 - 25GB)</option>
+            <option value="server2">Server 2 (Account 2 - 25GB)</option>
+        </select>
     </div>
 
-    <div class="wrapper">
-        <div id="login-section" class="card">
-            <h1>SYSTEM LOGIN</h1>
-            <input type="text" id="user" placeholder="Username">
-            <input type="password" id="pass" placeholder="Password">
-            <button class="btn-main" onclick="checkLogin()">START ENGINE</button>
-            <a href="https://wa.me/+94783188906?text=_𝙝𝙮" style="color:#25d366; font-size:0.8rem; text-decoration:none; display:block; margin-top:15px;">Get Access Key</a>
-        </div>
+    <div class="form-group">
+        <label for="fileInput">ගොනුවක් තෝරන්න (Select File):</label>
+        <input type="file" id="fileInput">
+    </div>
+    
+    <button onclick="uploadFile()">ලින්ක් එක ජෙනරේට් කරන්න</button>
+    
+    <div class="result" id="resultArea"></div>
+</div>
 
-        <div id="main-section" class="card hidden">
-            <div class="video-container">
-                <video id="bg-video" class="clean-video" autoplay muted loop playsinline>
-                    <source src="https://cloud.laksidunimsara.com/f/Dassa2007/1776306893843-From_KlickPin_CF_Wallpaper_live_HD_in_2026___Live_wallpaper_for_pc_Anime_wallpaper_Live_wallpapers_-_Pin-42291683996190815.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
+<script>
+    // Server 1 විස්තර (පළමු එකවුන්ට් එක)
+    const server1 = {
+        cloudName: "wwb8ifud",[span_2](start_span)[span_2](end_span)
+        uploadPreset: "dg_dev[span_3](start_span)"[span_3](end_span)
+    };
 
-            <div class="game-nav">
-                <button class="g-btn active" onclick="setGame('AVIATOR', this)">AVIATOR</button>
-                <button class="g-btn" onclick="setGame('APPLE', this)">APPLE</button>
-                <button class="g-btn" onclick="setGame('AVIATRIX', this)">AVIATRIX</button>
-            </div>
+    // Server 2 විස්තර (අලුත් එකවුන්ට් එක)
+    const server2 = {
+        cloudName: "rakvvolf",
+        uploadPreset: "dg_dev1"
+    };
 
-            <div class="display-screen">
-                <div id="logs">System Encrypted...</div>
-                <div id="val-display" style="font-size: 2.2rem; font-family: 'Orbitron';">---</div>
-                <div id="apple-grid" class="apple-grid hidden">
-                    <div class="apple-box">1</div><div class="apple-box">2</div><div class="apple-box">3</div><div class="apple-box">4</div><div class="apple-box">5</div>
-                </div>
-            </div>
+    async function uploadFile() {
+        const fileInput = document.getElementById('fileInput');
+        const serverSelect = document.getElementById('serverSelect').value;
+        const resultArea = document.getElementById('resultArea');
 
-            <button class="btn-main" id="gen-btn" onclick="generate()">GENERATE SIGNAL</button>
-            
-            <div class="history-box">
-                <div class="history-list" id="history-list">
-                    <div class="hist-item">1.25x</div><div class="hist-item">2.40x</div><div class="hist-item">1.10x</div>
-                </div>
-            </div>
-        </div>
+        if (fileInput.files.length === 0) {
+            alert('කරුණාකර මුලින්ම ෆයිල් එකක් තෝරන්න!');
+            return;
+        }
 
-        <div id="contact-section" class="card hidden">
-            <h1>MENU</h1>
-            <div style="text-align:left; background:#000; padding:15px; border-radius:10px; font-size:0.9rem;">
-                <p>👤 <b>Admin:</b> Dasun (DG)</p>
-                <p>💬 <b>WhatsApp:</b> +94783188906</p>
-                <p>🛡️ <b>Access:</b> Premium Member</p>
-            </div>
-            <button class="btn-main" onclick="showPage('main')">BACK</button>
-        </div>
-                    </div>
-                    <script src="script.js" ></script>
+        // තෝරාගත් සර්වර් එකට අනුව අදාළ විස්තර තෝරා ගැනීම
+        const currentServer = (serverSelect === 'server1') ? server1 : server2;
+
+        const file = fileInput.files[0];
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', currentServer.uploadPreset); 
+
+        resultArea.innerHTML = 'અප්ලෝඩ් වෙමින් පවතී... කරුණාකර රැඳී සිටින්න.';
+
+        try {
+            const response = await fetch(`https://api.cloudinary.com/v1_1/${currentServer.cloudName}/auto/upload`, {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+            if (data.secure_url) {
+                const longUrl = data.secure_url;
+                
+                let shortUrl = longUrl;
+                try {
+                    const shortResponse = await fetch(`https://is.gd/create.php?format=simple&url=${encodeURIComponent(longUrl)}`);
+                    if (shortResponse.ok) {
+                        const text = await shortResponse.text();
+                        if (text.startsWith('http')) {
+                            shortUrl = text.trim();
+                        }
+                    }
+                } catch (err) {
+                    console.log('Shortener error, using direct URL');
+                }
+
+                resultArea.innerHTML = `<b>සාර්ථකයි! (${serverSelect}) ඔබේ ලින්ක් එක:</b><br><a href="${shortUrl}" target="_blank">${shortUrl}</a>`;
+            } else {
+                resultArea.innerHTML = 'අප්ලෝඩ් කිරීම අසාර්ථකයි. නැවත උත්සාහ කරන්න.';
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            resultArea.innerHTML = 'දෝෂයක් සිදු විය.';
+        }
+    }
+</script>
+
 </body>
 </html>
