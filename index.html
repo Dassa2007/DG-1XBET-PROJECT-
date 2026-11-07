@@ -5,11 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Multi-Server Cloudinary URL Generator</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -25,25 +21,71 @@
             border-radius: 16px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
             width: 100%;
-            max-width: 440px;
+            max-width: 500px;
         }
         h2 {
             text-align: center;
             color: #1a1a2e;
-            margin-bottom: 25px;
+            margin-bottom: 5px;
             font-size: 24px;
             font-weight: 700;
         }
-        .form-group {
-            margin-bottom: 20px;
+        .subtitle {
+            text-align: center;
+            color: #888;
+            font-size: 13px;
+            margin-bottom: 25px;
         }
+        .form-group { margin-bottom: 20px; }
         label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             color: #444;
             font-weight: 600;
             font-size: 14px;
         }
+        /* සර්වර් කාඩ්පත් ජාලය */
+        .server-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .server-card {
+            position: relative;
+            padding: 14px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            background: #fafafa;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+        .server-card:hover {
+            border-color: #a5b4fc;
+            background: #f5f7ff;
+        }
+        .server-card.active {
+            border-color: #667eea;
+            background: #eef1ff;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+        }
+        .server-card .icon {
+            font-size: 22px;
+            margin-bottom: 4px;
+            display: block;
+        }
+        .server-card .title {
+            font-weight: 700;
+            color: #1a1a2e;
+            font-size: 14px;
+        }
+        .server-card .desc {
+            font-size: 11px;
+            color: #888;
+            margin-top: 2px;
+        }
+        .server-card.active .title { color: #4c51bf; }
+
         select, input[type="file"] {
             width: 100%;
             padding: 12px 14px;
@@ -71,16 +113,10 @@
             transition: background 0.2s, transform 0.1s;
             margin-top: 5px;
         }
-        button:hover {
-            background: #5a6fd6;
-        }
-        button:active {
-            transform: scale(0.98);
-        }
-        button:disabled {
-            background: #a0aec0;
-            cursor: not-allowed;
-        }
+        button:hover { background: #5a6fd6; }
+        button:active { transform: scale(0.98); }
+        button:disabled { background: #a0aec0; cursor: not-allowed; }
+
         .result {
             margin-top: 25px;
             padding: 15px;
@@ -91,26 +127,11 @@
             font-size: 15px;
             display: none;
         }
-        .result.visible {
-            display: block;
-        }
-        .result.success {
-            background: #f0fff4;
-            border-color: #c6f6d5;
-        }
-        .result.error {
-            background: #fff5f5;
-            border-color: #fed7d7;
-            color: #c53030;
-        }
-        .result a {
-            color: #667eea;
-            font-weight: 600;
-            text-decoration: none;
-        }
-        .result a:hover {
-            text-decoration: underline;
-        }
+        .result.visible { display: block; }
+        .result.success { background: #f0fff4; border-color: #c6f6d5; }
+        .result.error { background: #fff5f5; border-color: #fed7d7; color: #c53030; }
+        .result a { color: #667eea; font-weight: 600; text-decoration: none; }
+        .result a:hover { text-decoration: underline; }
         .copy-btn {
             margin-top: 10px;
             padding: 8px 16px;
@@ -122,13 +143,10 @@
             cursor: pointer;
             width: auto;
         }
-        .copy-btn:hover {
-            background: #e2e8f0;
-        }
+        .copy-btn:hover { background: #e2e8f0; }
         .spinner {
             display: inline-block;
-            width: 18px;
-            height: 18px;
+            width: 18px; height: 18px;
             border: 3px solid #e2e8f0;
             border-top-color: #667eea;
             border-radius: 50%;
@@ -136,22 +154,41 @@
             vertical-align: middle;
             margin-right: 8px;
         }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
 <div class="container">
     <h2>Multi-Server URL Generator</h2>
-    
+    <p class="subtitle">සර්වර් 4කින් ඕනෑම එකක් තෝරන්න</p>
+
+    <!-- සර්වර් තේරීමේ කාඩ්පත් -->
     <div class="form-group">
-        <label for="serverSelect">සර්වර් එක තෝරන්න (Select Server):</label>
-        <select id="serverSelect">
-            <option value="server1">Server 1 (Account 1 - 25GB)</option>
-            <option value="server2">Server 2 (Account 2 - 25GB)</option>
-        </select>
+        <label>සර්වර් එක තෝරන්න (Select Server):</label>
+        <div class="server-grid" id="serverGrid">
+            <div class="server-card active" data-server="server1">
+                <span class="icon">🖥️</span>
+                <div class="title">Server 1</div>
+                <div class="desc">Account 1 • 25GB</div>
+            </div>
+            <div class="server-card" data-server="server2">
+                <span class="icon">💾</span>
+                <div class="title">Server 2</div>
+                <div class="desc">Account 2 • 25GB</div>
+            </div>
+            <div class="server-card" data-server="server3">
+                <span class="icon">☁️</span>
+                <div class="title">Server 3</div>
+                <div class="desc">Account 3 • 25GB</div>
+            </div>
+            <div class="server-card" data-server="server4">
+                <span class="icon">🚀</span>
+                <div class="title">Server 4</div>
+                <div class="desc">Account 4 • 25GB</div>
+            </div>
+        </div>
+        <input type="hidden" id="serverSelect" value="server1">
     </div>
 
     <div class="form-group">
@@ -165,7 +202,7 @@
 </div>
 
 <script>
-    // ✅ දෝෂ නිවැරදි කරන ලද සර්වර් වින්‍යාසයන්
+    // ✅ සර්වර් 4ක වින්‍යාසය
     const servers = {
         server1: {
             cloudName: "wwb8ifud",
@@ -174,8 +211,25 @@
         server2: {
             cloudName: "rakvvolf",
             uploadPreset: "dg_dev1"
+        },
+        server3: {
+            cloudName: "v2dlq2nx",
+            uploadPreset: "dg_dev2"
+        },
+        server4: {
+            cloudName: "dxctmzctl",
+            uploadPreset: "Dg_project"
         }
     };
+
+    // සර්වර් කාඩ්පත් ක්ලික් කිරීමේ ලොජික්
+    document.querySelectorAll('.server-card').forEach(card => {
+        card.addEventListener('click', () => {
+            document.querySelectorAll('.server-card').forEach(c => c.classList.remove('active'));
+            card.classList.add('active');
+            document.getElementById('serverSelect').value = card.dataset.server;
+        });
+    });
 
     async function uploadFile() {
         const fileInput = document.getElementById('fileInput');
@@ -195,12 +249,10 @@
         }
 
         const file = fileInput.files[0];
-        
         const formData = new FormData();
         formData.append('file', file);
-        formData.append('upload_preset', currentServer.uploadPreset); 
+        formData.append('upload_preset', currentServer.uploadPreset);
 
-        // අප්ලෝඩ් වන අතරතුර බොත්තම අක්‍රීය කර ලෝඩින් එකක් පෙන්වන්න
         uploadBtn.disabled = true;
         resultArea.className = 'result visible';
         resultArea.innerHTML = '<span class="spinner"></span> අප්ලෝඩ් වෙමින් පවතී... කරුණාකර රැඳී සිටින්න.';
@@ -212,12 +264,12 @@
             });
 
             const data = await response.json();
-            
+
             if (data.secure_url) {
                 const longUrl = data.secure_url;
                 let shortUrl = longUrl;
-                
-                // කෙටි URL එකක් උත්සාහ කරන්න (අසාර්ථක වුවහොත් සෘජු URL එක භාවිතා කරන්න)
+
+                // කෙටි URL එකක් උත්සාහ කරන්න
                 try {
                     const shortResponse = await fetch(`https://is.gd/create.php?format=simple&url=${encodeURIComponent(longUrl)}`);
                     if (shortResponse.ok) {
@@ -230,15 +282,16 @@
                     console.log('Shortener error, using direct URL');
                 }
 
+                const serverName = `Server ${serverKey.replace('server', '')}`;
                 resultArea.className = 'result visible success';
                 resultArea.innerHTML = `
-                    <strong>✅ සාර්ථකයි! (${serverKey}) ඔබේ ලින්ක් එක:</strong><br><br>
+                    <strong>✅ සාර්ථකයි! (${serverName}) ඔබේ ලින්ක් එක:</strong><br><br>
                     <a href="${shortUrl}" target="_blank" rel="noopener">${shortUrl}</a>
                     <br>
                     <button class="copy-btn" onclick="copyToClipboard('${shortUrl}')">📋 Copy Link</button>
+                    <button class="copy-btn" onclick="copyToClipboard('${longUrl}')">🔗 Copy Original</button>
                 `;
             } else {
-                // Cloudinary වෙතින් ලැබෙන දෝෂ පණිවිඩය පෙන්වන්න
                 const errorMsg = data.error?.message || 'අප්ලෝඩ් කිරීම අසාර්ථකයි.';
                 resultArea.className = 'result visible error';
                 resultArea.innerHTML = `<strong>❌ දෝෂයකි:</strong> ${errorMsg}`;
@@ -252,7 +305,6 @@
         }
     }
 
-    // ලින්ක් එක ක්ලිප්බෝඩ් එකට පිටපත් කිරීමේ ශ්‍රිතය
     function copyToClipboard(text) {
         navigator.clipboard.writeText(text).then(() => {
             alert('ලින්ක් එක ක්ලිප්බෝඩ් එකට පිටපත් කරන ලදී!');
